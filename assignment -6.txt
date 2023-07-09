@@ -1,0 +1,399 @@
+#1 WAQ to display the actors whose name contain 5 characters?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+for i in data:
+    if len(i[1])==5:
+        print(i[1])   
+
+mysql> select actor_name from actors where actor_name like'_____';
++------------+
+| actor_name |
++------------+
+| kamal      |
+| surya      |
+| chiru      |
+| sampu      |
++------------+
+'''
+#2 WAQ to display the directors name that has more succes rate?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from directors;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[3])
+for i in data:
+    if i[3]==max(l):
+        print(i[1])
+    
+
+mysql> select director_name from directors order by success_rate desc limit 2;
++---------------+
+| director_name |
++---------------+
+| raja mouli    |
+| rao           |
++---------------+
+'''
+#3 WAQ to display the directors name who did not direct one movie also?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from directors;')
+data=c.fetchall()
+for i in data:
+    if i[2]==0:
+        print(i[1])
+mysql> select director_name from directors where total_movies=0;
++---------------+
+| director_name |
++---------------+
+| rao           |
++---------------+
+'''
+#4 WAQ to display the directors details who directed more movies?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from directors;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[2])
+for i in data:
+    if i[2]==max(l):
+        print([i[1]])
+mysql> select director_name from directors order by total_movies desc limit 2;
++---------------+
+| director_name |
++---------------+
+| puri          |
+| trivikram     |
++---------------+
+'''
+#5 WAQ to display all acterss names who is taking highest remuneration?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actress;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[3])
+for i in data:
+    if i[3]==max(l):
+        print(i[1])
+
+mysql> select actress_name from actress order by  remuneration desc limit 2;
++--------------+
+| actress_name |
++--------------+
+| kajal        |
+| alia         |
++--------------+
+'''
+#6 WAQ to display all actress who acted in more movies?
+'''
+import pymysql as p
+connection= p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actress;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[2])
+for i in data:
+    if i[2]==max(l):
+        print(i[1])
+
+mysql> select actress_name from actress order by  total_movies desc limit 2;
++--------------+
+| actress_name |
++--------------+
+| anusha       |
++--------------+
+'''
+#7 WAQ to display all producers names and their banner names?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from producers;')
+data=c.fetchall()
+for i in data:
+    print(i[1],i[3])
+
+mysql> select producer_name,banner_name from producers;
++---------------+---------------+
+| producer_name | banner_name   |
++---------------+---------------+
+| aravindh      | aha           |
+| narayana      | nth           |
+| raju          | raju arts     |
+| sai           | sai creations |
++---------------+---------------+
+'''
+#8 WAQ to display the producer name that spent less budget on movies?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from producers;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[2])
+for i in data:
+    if i[2]==max(l):
+        print(i[1])
+
+mysql> select producer_name from producers order by budget asc limit 1;
++---------------+
+| producer_name |
++---------------+
+| sai           |
++---------------+
+'''
+#9 WAQ to display the owner of nth banner?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from producers;')
+data=c.fetchall()
+for i in data:
+    if i[3]=='nth':
+        print(i[1])
+        
+mysql> select producer_name from producers where banner_name='nth';
++---------------+
+| producer_name |
++---------------+
+| narayana      |
++---------------+
+'''
+#10 WAQ the budget of aha banner?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select* from producers;')
+data=c.fetchall()
+for i in data:
+    if i[3]=='aha':
+        print(i[2])
+
+mysql> select budget from producers where banner_name='aha';
++--------+
+| budget |
++--------+
+|    150 |
++--------+
+'''
+#11 WAQ to display actress name whose name starts and ends with a character?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actress;')
+data=c.fetchall()
+for i in data:
+    if i[1].startswith('a') and i[1].endswith('a'):
+        print(i[1])
+  
+mysql> select * from actress WHERE actress_name LIKE ('a%') and actress_name LIKE ('a%') ;
++------------+--------------+--------------+--------------+------+------+
+| actress_id | actress_name | total_movies | remuneration | aid  | did  |
++------------+--------------+--------------+--------------+------+------+
+|        104 | alia         |           20 |           30 |    5 |   12 |
+|        105 | anusha       |           40 |           20 |    6 |   11 |
++------------+--------------+--------------+--------------+------+------+
+'''
+#12 WAQ to display the actor name who acted in more movies?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+l=[]
+for  i in data:
+    l.append(i[2])
+for i in data:
+    if i[2]==max(l):
+        print(i[1])
+    
+mysql> select actor_name from actors order by  total_movies desc limit 1;
++------------+
+| actor_name |
++------------+
+| chiru      |
++------------+
+'''
+#13 WAQ to display the actor name who is taking less remunertion?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[3])
+for i in data:
+    if i[3]==min(l):
+        print(i[1])
+   
+mysql> select actor_name from actors order by  remuneration asc limit 1;
++------------+
+| actor_name |
++------------+
+| sampu      |
++------------+
+'''
+#14 WAQ to display the actor name age who acted in more then 100 movies?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+for i in data:
+    if i[2]>100:
+        print(i[1])
+
+mysql> select actor_name,age from actors where total_movies>100;
++------------+------+
+| actor_name | age  |
++------------+------+
+| kamal      |   68 |
+| chiru      |   65 |
+| balaiah    |   60 |
++------------+------+
+'''
+#15 WAQ to display the actors names, total movies and remuneration of the actors whose age more then 50 years?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+for i in data:
+    if i[4]>50:
+        print(i[1],i[2],i[3])
+
+mysql> select actor_name,total_movies,remuneration from actors where age>50;
++------------+--------------+--------------+
+| actor_name | total_movies | remuneration |
++------------+--------------+--------------+
+| rajani     |          100 |          125 |
+| kamal      |          110 |          100 |
+| chiru      |          150 |           50 |
+| balaiah    |          140 |           40 |
++------------+--------------+--------------+
+'''
+#16 WAQ to display the oldest actor name?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[4])
+for i in data:
+    if i[4]==max(l):
+        print(i[1])
+
+mysql> select actor_name from actors order by age desc limit 1;
++------------+
+| actor_name |
++------------+
+| rajani     |
++------------+
+'''
+#17 WAQ to dispaly the actor name and age who acted in less movies?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[2])
+for i in data:
+    if i[2]==min(l):
+        print(i[1],i[4])    
+mysql> select actor_name,age from actors order by total_movies asc limit 1;
++------------+------+
+| actor_name | age  |
++------------+------+
+| sampu      |   40 |
++------------+------+
+'''
+#18 WAQ vto display the actor details whose name starts with either s or b character?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+for i in data:
+    if i[1].startswith('s') or i[1].startswith('b'):
+        print(i)
+mysql> select * from actors WHERE actor_name LIKE 's%' or actor_name LIKE 'b%';
++----------+------------+--------------+--------------+------+
+| actor_id | actor_name | total_movies | remuneration | age  |
++----------+------------+--------------+--------------+------+
+|        3 | surya      |           30 |           75 |   45 |
+|        5 | balaiah    |          140 |           40 |   60 |
+|        6 | sampu      |            5 |            3 |   40 |
++----------+------------+--------------+--------------+------+
+'''
+#19 WAQ to dispaly the youngest actor name his remuneration ?
+'''
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+l=[]
+for i in data:
+    l.append(i[4])
+for i in data:
+    if i[4]==min(l):
+        print(i[1],i[3])
+
+mysql> select actor_name,remuneration from actors order by age asc limit 1;
++------------+--------------+
+| actor_name | remuneration |
++------------+--------------+
+| sampu      |            3 |
++------------+--------------+
+'''
+#20 WAQ to dispaly the actor name who is not directed by any director?
+import pymysql as p
+connection=p.connect(host='localhost',user='root',password='root',db='veer')
+c=connection.cursor()
+c.execute('select * from actors;')
+data=c.fetchall()
+
+mysql> select actor_name from actors where actor_id not in(select aid from directors where aid is not null);
++------------+
+| actor_name |
++------------+
+| chiru      |
++------------+
+'''

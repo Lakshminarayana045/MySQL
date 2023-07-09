@@ -1,0 +1,491 @@
+		1.Student     	  
++------+-------+--------+
+| sid  | sname | loc    |      
++------+-------+--------+			
+|    1 | nani  | hyd    |		
+|    2 | rohit | bang   |           
+|    3 | kohil | delhi  |      
+|    4 | dhoni | chenni |
+|    5 | sai   | Hyd    |     
++------+-------+--------+       
+		2.Course
++------+--------+------+------+
+| cid  | cname  | fee  | sno  |
++------+--------+------+------+
+|   11 | Python | 3000 |    1 |
+|   12 | Django | 4000 |    2 |
+|   13 | Java   | 4000 |    3 |
+|   14 | UI     |  500 |    6 |
+|   15 | Sql    | 1000 |    7 |
++------+--------+------+------+
+		3.Product
++------+----------+-------+------+
+| pid  | pname    | pcost | cno  |
++------+----------+-------+------+
+|  101 | lap      | 50000 |   11 |
+|  102 | mobile   | 30000 |   12 |
+|  103 | pen      |   100 |   13 |
+|  104 | Tab      | 20000 |   15 |
+|  105 | computer | 25000 |   16 |
+|  106 | mouse    |  1500 |   13 |
++------+----------+-------+------+
+		4.Company
++-------+---------+-----------+------+
+| comid | company | dept      | pno  |
++-------+---------+-----------+------+
+|  1001 | Apple   | Ios       |  101 |
+|  1002 | Samsung | Android   |  102 |
+|  1003 | Lenovo  | Blue      |  103 |
+|  1004 | LG      | Electonic |  107 |
++-------+---------+-----------+------+
+
+
+
+1.Write a Query to display students names who belongs to Hyderabad ?
+
+mysql> select sname
+    -> from student
+    -> where loc='hyd';
++-------+
+| sname |
++-------+
+| nani  |
+| sai   |
++-------+
+
+
+2.Write a Query to display students names who are not belongs to Delhi ?
+
+mysql> select sname
+    -> from student
+    -> where loc != 'delhi';
++-------+
+| sname |
++-------+
+| nani  |
+| rohit |
+| dhoni |
+| sai   |
++-------+
+
+
+3.Write a Query to display students names whose names start with 'S' characters ?
+
+mysql> select sname
+    -> from student
+    -> where sname like 's%';
++-------+
+| sname |
++-------+
+| sai   |
++-------+
+
+4.Write a Query to display students names whose names end with 'i' characters ?
+
+mysql> select sname
+    -> from student
+    -> where sname like '%i';
++-------+
+| sname |
++-------+
+| nani  |
+| dhoni |
+| sai   |
++-------+
+
+5.Write a Query to display students names whose names contain 'a' characters  ?
+
+mysql> select sname
+    -> from student
+    -> where sname like '%a%';
++-------+
+| sname |
++-------+
+| nani  |
+| sai   |
++-------+
+
+6.Write a Query to display students names whose names doesn't contain 'a' characters ?
+
+mysql> select sname
+    -> from student
+    -> where sname not like '%a%';
++-------+
+| sname |
++-------+
+| rohit |
+| kohil |
+| dhoni |
++-------+
+
+7.Write a Query to display students names whose names contains onlt '5' characters ?
+
+mysql> select sname
+    -> from student
+    -> where sname like '_____';
++-------+
+| sname |
++-------+
+| rohit |
+| kohil |
+| dhoni |
++-------+
+
+8.Write a Query to display all students names whose name contains 'a' in second position ?
+
+mysql> select sname
+    -> from student
+    -> where sname like '_a%';
++-------+
+| sname |
++-------+
+| nani  |
+| sai   |
++-------+
+
+9.Write a Query to display all students names whose names doesn't contain '3' ?
+
+mysql> select sname
+    -> from student
+    -> where sname not like '___';
++-------+
+| sname |
++-------+
+| nani  |
+| rohit |
+| kohil |
+| dhoni |
++-------+
+
+10.Write a Query to display all students names whose names contains 'n' in the first and third place ?
+
+mysql> select sname
+    -> from student
+    -> where sname like 'n_n%';
++-------+
+| sname |
++-------+
+| nani  |
++-------+
+
+
+11.Write a Query to display students names whose are learning python course ?
+
+mysql> select sname from student where sid =
+    -> (select sno from course where cname = 'python');
++-------+
+| sname |
++-------+
+| nani  |
++-------+
+
+12.Write a Query to display students names who spent more then 3500/- fee to learn course?
+
+mysql> select sname from student where sid in
+    -> (select sno from course where fee >= 3500);
++-------+
+| sname |
++-------+
+| rohit |
+| kohil |
++-------+
+
+13.Write a Query to display students names who are not learning java courses?
+
+mysql> select sname from student where sid in
+    -> (select sno from course where cname != 'java');
++-------+
+| sname |
++-------+
+| nani  |
+| rohit |
++-------+
+
+14.Write a Query to display student names and location who spend 1000/- as fee?
+
+mysql> select sname from student where sid in
+    -> (select sno from course where fee = 1000);
+
+Empty set (0.00 sec)
+
+15.Write a Query to display the courses name of nani?
+
+mysql> select cname from course where sno =
+    -> ( select sid from student where sname = 'nani');
++--------+
+| cname  |
++--------+
+| Python |
++--------+
+
+16.Write a Query to display the fee of kohli?
+
+mysql> select fee from course where sno =
+    -> ( select sid from student where sname = 'kohil');
++------+
+| fee  |
++------+
+| 4000 |
++------+
+
+17.Write a Query to display all students names who are learning the course?
+
+mysql> select sname from student where sid in
+    -> ( select sno from course where cname is not null );
++-------+
+| sname |
++-------+
+| nani  |
+| rohit |
+| kohil |
++-------+
+
+18.Write a Query to display all students names who are not learning any course ?
+
+mysql> select sname from student where sid not in
+    -> ( select sno from course where cname is not null );
++-------+
+| sname |
++-------+
+| dhoni |
+| sai   |
++-------+
+
+19.Write a Query to display all course names which is learning by students?
+
+CASE 1
+------
+mysql> select cname from course where sno in
+    -> ( select sid from student where sname is not null);
++--------+
+| cname  |
++--------+
+| Python |
+| Django |
+| Java   |
++--------+
+
+CASE 2
+------
+mysql> select cname from course where sno in
+    -> ( select sid from student);
++--------+
+| cname  |
++--------+
+| Python |
+| Django |
+| Java   |
++--------+
+
+
+20.Write a Query to display students names which is not learning by students?
+
+CASE 1
+------
+mysql> select cname from course where sno not in
+    -> ( select sid from student where sname is not null);
++-------+
+| cname |
++-------+
+| UI    |
+| Sql   |
++-------+
+
+CASE 2
+------
+mysql> select cname from course where sno not in
+    -> ( select sid from student);
++-------+
+| cname |
++-------+
+| UI    |
+| Sql   |
++-------+
+
+
+21.Write a Query to display students names who Bought laptop ?
+
+mysql> select sname from student where sid in
+    -> ( select sno from course where cid in
+    -> ( select cno from product where pname = 'lap'));
++-------+
+| sname |
++-------+
+| nani  |
++-------+
+
+22.Write a Query to display students names location who bought the product with more then 20000/-?
+
+mysql> select sname,loc from student where sid in
+    -> ( select sno from course where cid in
+    -> ( select cno from product where pcost >= 20000));
++-------+------+
+| sname | loc  |
++-------+------+
+| nani  | hyd  |
+| rohit | bang |
++-------+------+
+
+23.Write a Query to display product names of kohil?
+
+mysql> select pname from product where cno in
+    -> ( select cid from course where sno in
+    -> ( select sid from student where sname='kohil'));
++-------+
+| pname |
++-------+
+| pen   |
+| mouse |
++-------+
+
+24.Write a Query to display product cost of students who is from Hyd ?
+
+mysql> select pcost from product where cno in
+    -> ( select cid from course where sno in
+    -> ( select sid from student where loc='hyd'));
++-------+
+| pcost |
++-------+
+| 50000 |
++-------+
+
+25.Write a Query to display product name and cost of student who is learning python course?
+
+mysql> select pname,pcost from product where cno in
+    -> (select cid from course where cname ='python');
++-------+-------+
+| pname | pcost |
++-------+-------+
+| lap   | 50000 |
++-------+-------+
+
+26.Write a Query to display the course name and fee of student who bought pen ?
+
+mysql> select cname,fee from course where cid in
+    -> ( select cno from product where pname = 'pen');
++-------+------+
+| cname | fee  |
++-------+------+
+| Java  | 4000 |
++-------+------+
+
+
+27.Write a Query to display the location of students who is not learning python course?
+
+mysql> select loc from student where sid in
+    -> ( select sno from course where cname !='python');
++-------+
+| loc   |
++-------+
+| bang  |
+| delhi |
++-------+
+
+28.Write a Query to display student name who didn't buy any product  ?
+
+mysql> select sname from student where sid in
+    -> ( select sno from course where cid in
+    -> ( select cno from product where pname is null));
+Empty set (0.00 sec)
+
+29.Write a Query to display students names who bought products ?
+
+mysql> select sname from student where sid in
+    -> (select sno from course where cid in
+    -> (select cno from product));
++-------+
+| sname |
++-------+
+| nani |
+| rohit |
+| kohil |
++-------+
+
+mysql> select sname from student where sid in
+    -> ( select sno from course where cid in
+    -> ( select cno from product where pname is not null));
++-------+
+| sname |
++-------+
+| nani  |
+| rohit |
+| kohil |
++-------+
+
+30.Write a Query to display course names of students who spent more then 25000/- to any products ?
+
+mysql> select cname from course where cid in
+    -> ( select cno from product where pcost>25000);
++--------+
+| cname  |
++--------+
+| Python |
+| Django |
++--------+
+
+
+31.Write a Query to display the student name who is using samsung products?
+
+mysql> select sname from student where  sid in
+    -> ( select sno from course where cid in
+    -> ( select cno from product where pid in
+    -> ( select pno from company where company = 'samsung')));
++-------+
+| sname |
++-------+
+| rohit |
++-------+
+
+
+32.Write a Query to display the students name also is not using ios and andriod product?
+
+mysql> select sname from student where sid in
+    -> (select sno from course where cid in
+    -> (select cno from product where pid in
+    -> (select pno from company where dept not in ('ios','android'))));
++-------+
+| sname |
++-------+
+| kohli |
++-------+
+
+
+33.Write a Query to display product company of kohli?
+
+mysql> select company from company where pno in
+    -> (select pid from product where cno in
+    -> (select cid from course where sno in
+    -> (select sid from student where sname ='kohil')));
++---------+
+| company |
++---------+
+| lenovo |
++---------+
+
+34.Write a Query to display the course os students who bought Android product ?
+
+mysql> select cname from course where cid in
+    -> (select cno from product where pid in
+    -> (select pno from company where dept ='android'));
++--------+
+| cname |
++--------+
+| django |
++--------+
+
+35.Write a Query to display the students name who are using either Apple company or Android dept product ?
+
+mysql> select sname from student where sid in
+    -> ( select sno from course where cid in
+    -> ( select cno from product where pid in
+    -> ( select pno from company where ( company = 'apple' or dept = 'android' ))));
++-------+
+| sname |
++-------+
+| nani |
+| rohit |
++-------+
+
+
+
+

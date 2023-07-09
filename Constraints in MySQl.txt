@@ -1,0 +1,469 @@
+CONSTRAINTS
+		1.not null CONSTRAINTS
+		2.primary key CONSTRAINTS
+		3.unique key CONSTRAINTS
+		4.default CONSTRAINTS
+		5.check CONSTRAINTS
+		6.foreign key CONSTRAINTS
+
+1.NOT NULL (not null)
+  ========
+
+mysql> create database sri;
+ERROR 1007 (HY000): Can't create database 'sri'; database exists
+
+mysql> use sri;
+Database changed
+
+
+mysql> create table sri(name char(20),sn varchar(20),no int not null);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc sri;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | char(20)    | YES  |     | NULL    |       |
+| sn    | varchar(20) | YES  |     | NULL    |       |
+| no    | int         | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+
+mysql> alter table sri modify sn varchar(20) not null;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc sri;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | char(20)    | YES  |     | NULL    |       |
+| sn    | varchar(20) | NO   |     | NULL    |       |
+| no    | int         | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+
+2.PRIMARY KEY (primary key)
+  ===========
+
+
+mysql> create database mouse;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use mouse;
+Database changed
+
+
+mysql> create table mouse(name char(10) not null,number int,clg varchar(20),id int primary key);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc mouse;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | char(10)    | NO   |     | NULL    |       |
+| number | int         | YES  |     | NULL    |       |
+| clg    | varchar(20) | YES  |     | NULL    |       |
+| id     | int         | NO   | PRI | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table mouse drop column id;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mouse;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | char(10)    | NO   |     | NULL    |       |
+| number | int         | YES  |     | NULL    |       |
+| clg    | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table mouse modify clg varchar(20) primary key;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc mouse;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | char(10)    | NO   |     | NULL    |       |
+| number | int         | YES  |     | NULL    |       |
+| clg    | varchar(20) | NO   | PRI | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+3.UNIQUE KEY (unique)
+  ==========
+
+mysql> create database k;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use k;
+Database changed
+
+
+mysql> create table k(name char(10) not null,id int primary key,mobile bigint unique);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc k;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| name   | char(10) | NO   |     | NULL    |       |
+| id     | int      | NO   | PRI | NULL    |       |
+| mobile | bigint   | YES  | UNI | NULL    |       |
++--------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table k drop column mobile;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc k;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| name  | char(10) | NO   |     | NULL    |       |
+| id    | int      | NO   | PRI | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table k modify name char(10) unique;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc k;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| name  | char(10) | YES  | UNI | NULL    |       |
+| id    | int      | NO   | PRI | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+
+mysql> alter table k add (clg varchar(20),course char(20));
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc k;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | char(10)    | YES  | UNI | NULL    |       |
+| id     | int         | NO   | PRI | NULL    |       |
+| clg    | varchar(20) | YES  |     | NULL    |       |
+| course | char(20)    | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> alter table k modify course char(20) unique;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table k modify clg varchar(20) unique;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc k;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | char(10)    | YES  | UNI | NULL    |       |
+| id     | int         | NO   | PRI | NULL    |       |
+| clg    | varchar(20) | YES  | UNI | NULL    |       |
+| course | char(20)    | YES  | UNI | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+4.DEFAULT CONSTRAINTS (default)
+  ===================
+
+
+mysql> create database u;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use u;
+Database changed
+
+ 
+mysql> create table u (no int,name varchar(20),city char(10) default 'hyd');
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc u;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| no    | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| city  | char(10)    | YES  |     | hyd     |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into u (no,name)values(1,"sai");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into u (no,name)values(2,"kln");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into u values(3,'sri','pune');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc u;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| no    | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| city  | char(10)    | YES  |     | hyd     |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from u;
++------+------+------+
+| no   | name | city |
++------+------+------+
+|    1 | sai  | hyd  |
+|    2 | kln  | hyd  |
+|    3 | sri  | pune |
++------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> alter table u add column course char(20) default "sap";
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from u;
++------+------+------+--------+
+| no   | name | city | course |
++------+------+------+--------+
+|    1 | sai  | hyd  | sap    |
+|    2 | kln  | hyd  | sap    |
+|    3 | sri  | pune | sap    |
++------+------+------+--------+
+3 rows in set (0.00 sec)
+
+5.CHECK CONSTRAINT (check)
+  ================
+
+
+mysql> create database c;
+Query OK, 1 row affected (0.01 sec)
+
+
+mysql> use c;
+Database changed
+
+mysql> create table c (no bigint,name char(10),sal varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc c;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| no    | bigint      | YES  |     | NULL    |       |
+| name  | char(10)    | YES  |     | NULL    |       |
+| sal   | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into c values(111,"sai",'threeZero');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into c values(222,"venky",'TwoZero');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into c values(333,"lucky",'TwoOne');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from c;
++------+-------+-----------+
+| no   | name  | sal       |
++------+-------+-----------+
+|  111 | sai   | threeZero |
+|  222 | venky | TwoZero   |
+|  333 | lucky | TwoOne    |
++------+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table c add column id int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from c;
++------+-------+-----------+------+
+| no   | name  | sal       | id   |
++------+-------+-----------+------+
+|  111 | sai   | threeZero | NULL |
+|  222 | venky | TwoZero   | NULL |
+|  333 | lucky | TwoOne    | NULL |
++------+-------+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> alter table c add column mobile int check(mobile <=1000);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from c;
++------+-------+-----------+------+--------+
+| no   | name  | sal       | id   | mobile |
++------+-------+-----------+------+--------+
+|  111 | sai   | threeZero | NULL |   NULL |
+|  222 | venky | TwoZero   | NULL |   NULL |
+|  333 | lucky | TwoOne    | NULL |   NULL |
++------+-------+-----------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into c (id,mobile)values(1,999);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> insert into c (id,mobile)values(2,1000);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> insert into c (id,mobile)values(3,100);
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select * from c;
++------+-------+-----------+------+--------+
+| no   | name  | sal       | id   | mobile |
++------+-------+-----------+------+--------+
+|  111 | sai   | threeZero | NULL |   NULL |
+|  222 | venky | TwoZero   | NULL |   NULL |
+|  333 | lucky | TwoOne    | NULL |   NULL |
+| NULL | NULL  | NULL      |    1 |    999 |
+| NULL | NULL  | NULL      |    2 |   1000 |
+| NULL | NULL  | NULL      |    3 |    100 |
++------+-------+-----------+------+--------+
+6 rows in set (0.00 sec)
+
+6.FOREIGN KEY (foreign key)
+  ===========
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| c                  |
+| con                |
+| information_schema |
+| k                  |
+| lucky              |
+| mouse              |
+| mysql              |
+| nntable            |
+| one                |
+| p                  |
+| performance_schema |
+| revi               |
+| sri                |
+| sys                |
+| table1             |
+| two                |
+| u                  |
+| venky              |
++--------------------+
+18 rows in set (0.00 sec)
+
+mysql> use p
+Database changed
+
+	
+
+	
+mysql> create table p(id int primary key, pname char(20),pcourse varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from p;
+Empty set (0.00 sec)
+
+mysql> desc p;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| pname   | char(20)    | YES  |     | NULL    |       |
+| pcourse | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+	
+	
+mysql> insert into p values(1,'nani','sri');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into p values(2,'chandu','satya');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into p values(2,'mahesh','pavan');
+ERROR 1062 (23000): Duplicate entry '2' for key 'p.PRIMARY'
+
+mysql> insert into p values(3,'mahesh','pavan');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from p;
++----+--------+---------+
+| id | pname  | pcourse |
++----+--------+---------+
+|  1 | nani   | sri     |
+|  2 | chandu | satya   |
+|  3 | mahesh | pavan   |
++----+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> create database pone;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table pone(poid int,name varchar(20),sal int primary key,pid int,foreign key(pid)references p(id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc pone;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| poid  | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| sal   | int         | NO   | PRI | NULL    |       |
+| pid   | int         | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into pone values(11,'sudder',3000,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into pone values(12,'ram',5000,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into pone values(14,'jai',7000,4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`p`.`pone`, CONSTRAINT `pone_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `p` (`id`))
+
+mysql> insert into pone values(14,'jai',7000,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into pone values(14,'sri ram',6500,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from pone;
++------+---------+------+------+
+| poid | name    | sal  | pid  |
++------+---------+------+------+
+|   11 | sudder  | 3000 |    1 |
+|   12 | ram     | 5000 |    2 |
+|   14 | sri ram | 6500 |    3 |
+|   14 | jai     | 7000 |    3 |
++------+---------+------+------+
+4 rows in set (0.00 sec)
+

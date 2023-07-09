@@ -1,0 +1,191 @@
+CREATE
+======
+
+mysql> create database dml;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use dml;
+Database changed
+mysql> create table hp (name char(10),fname char(10));
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> desc hp;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| name  | char(10) | YES  |     | NULL    |       |
+| fname | char(10) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+ALTER
+=====
+	
+	ADD
+	---
+
+mysql> alter table hp add mname char(15);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| name   | char(10) | YES  |     | NULL    |       |
+| fname  | char(10) | YES  |     | NULL    |       |
+| mname  | char(15) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table hp add (loc char(10),mobile int);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| name   | char(10) | YES  |     | NULL    |       |
+| fname  | char(10) | YES  |     | NULL    |       |
+| mname  | char(15) | YES  |     | NULL    |       |
+| loc    | char(10) | YES  |     | NULL    |       |
+| mobile | int      | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table hp add fmobile int AFTER fname;
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| name    | char(10) | YES  |     | NULL    |       |
+| fname   | char(10) | YES  |     | NULL    |       |
+| fmobile | int      | YES  |     | NULL    |       |
+| mname   | char(15) | YES  |     | NULL    |       |
+| loc     | char(10) | YES  |     | NULL    |       |
+| mobile  | int      | YES  |     | NULL    |       |
++---------+----------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> alter table hp add no int first;
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| no      | int      | YES  |     | NULL    |       |
+| name    | char(10) | YES  |     | NULL    |       |
+| fname   | char(10) | YES  |     | NULL    |       |
+| fmobile | int      | YES  |     | NULL    |       |
+| mname   | char(15) | YES  |     | NULL    |       |
+| loc     | char(10) | YES  |     | NULL    |       |
+| mobile  | int      | YES  |     | NULL    |       |
++---------+----------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+	DROP
+	----
+
+mysql> alter table hp drop fmobile;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| no     | int      | YES  |     | NULL    |       |
+| name   | char(10) | YES  |     | NULL    |       |
+| fname  | char(10) | YES  |     | NULL    |       |
+| mname  | char(15) | YES  |     | NULL    |       |
+| loc    | char(10) | YES  |     | NULL    |       |
+| mobile | int      | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+mysql> alter table hp drop loc,drop mobile;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| no    | int      | YES  |     | NULL    |       |
+| name  | char(10) | YES  |     | NULL    |       |
+| fname | char(10) | YES  |     | NULL    |       |
+| mname | char(15) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+	MODIFY
+	------
+
+mysql> alter table hp modify name int;
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| no    | int      | YES  |     | NULL    |       |
+| name  | int      | YES  |     | NULL    |       |
+| fname | char(10) | YES  |     | NULL    |       |
+| mname | char(15) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table hp modify fname int, modify mname int;
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| no    | int  | YES  |     | NULL    |       |
+| name  | int  | YES  |     | NULL    |       |
+| fname | int  | YES  |     | NULL    |       |
+| mname | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+	
+	RENAME
+	------
+
+mysql> alter table hp change fname father_name int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| no          | int  | YES  |     | NULL    |       |
+| name        | int  | YES  |     | NULL    |       |
+| father_name | int  | YES  |     | NULL    |       |
+| mname       | int  | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table hp change mname mother_name int,change name full_name int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hp;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| no          | int  | YES  |     | NULL    |       |
+| full_name   | int  | YES  |     | NULL    |       |
+| father_name | int  | YES  |     | NULL    |       |
+| mother_name | int  | YES  |     | NULL    |       |
++-------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)

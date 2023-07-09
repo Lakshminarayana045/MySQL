@@ -1,0 +1,233 @@
+						Cricket;
++------+----------+------+------+------+------+------+------+------------+
+| ID   | Name     | Age  | Test | ODI  | T20  | 50s  | 100s | Country    |
++------+----------+------+------+------+------+------+------+------------+
+|    1 | Rahul    |   30 |   43 |   45 |   66 |   43 |   14 | India      |
+|    2 | Surya    |   31 |    0 |   13 |   33 |   37 |   15 | India      |
+|    3 | Rohit    |   35 |   45 |  233 |  141 |   87 |   42 | India      |
+|    4 | Shakid   |   35 |   63 |  221 |  101 |   89 |   14 | Bangladesh |
+|    5 | Wasim    |   33 |    0 |   55 |   58 |    5 |    0 | Pakistan   |
+|    6 | Williams |   35 |   14 |  147 |   58 |   49 |    9 | Zimbabwe   |
+|    7 | Moeen    |   35 |   64 |  121 |   62 |   26 |    8 | England    |
+|    8 | Curran   |   24 |   24 |   16 |   27 |    4 |    0 | England    |
+|    9 | Warner   |   35 |   96 |  138 |   91 |   82 |   43 | Austarlia  |
+|   10 | Maxwell  |   33 |    7 |  127 |   90 |   32 |    6 | Australia  |
++------+----------+------+------+------+------+------+------+------------+
+
+
+1.Write a query to display all players details?
+mysql> select * from cricket;
++------+----------+------+------+------+------+------+------+------------+
+| ID   | Name     | Age  | Test | ODI  | T20  | 50s  | 100s | Country    |
++------+----------+------+------+------+------+------+------+------------+
+|    1 | Rahul    |   30 |   43 |   45 |   66 |   43 |   14 | India      |
+|    2 | Surya    |   31 |    0 |   13 |   33 |   37 |   15 | India      |
+|    3 | Rohit    |   35 |   45 |  233 |  141 |   87 |   42 | India      |
+|    4 | Shakid   |   35 |   63 |  221 |  101 |   89 |   14 | Bangladesh |
+|    5 | Wasim    |   33 |    0 |   55 |   58 |    5 |    0 | Pakistan   |
+|    6 | Williams |   35 |   14 |  147 |   58 |   49 |    9 | Zimbabwe   |
+|    7 | Moeen    |   35 |   64 |  121 |   62 |   26 |    8 | England    |
+|    8 | Curran   |   24 |   24 |   16 |   27 |    4 |    0 | England    |
+|    9 | Warner   |   35 |   96 |  138 |   91 |   82 |   43 | Austarlia  |
+|   10 | Maxwell  |   33 |    7 |  127 |   90 |   32 |    6 | Australia  |
++------+----------+------+------+------+------+------+------+------------+
+
+2. Write a query to display all details of Rahul?
+mysql> select * from cricket
+    -> where name='Rahul';
++------+-------+------+------+------+------+------+------+---------+
+| ID   | Name  | Age  | Test | ODI  | T20  | 50s  | 100s | Country |
++------+-------+------+------+------+------+------+------+---------+
+|    1 | Rahul |   30 |   43 |   45 |   66 |   43 |   14 | India   |
++------+-------+------+------+------+------+------+------+---------+
+
+3. Write a query to display all details of Indian players?
+mysql> select * from cricket where country='india';
++------+-------+------+------+------+------+------+------+---------+
+| ID   | Name  | Age  | Test | ODI  | T20  | 50s  | 100s | Country |
++------+-------+------+------+------+------+------+------+---------+
+|    1 | Rahul |   30 |   43 |   45 |   66 |   43 |   14 | India   |
+|    2 | Surya |   31 |    0 |   13 |   33 |   37 |   15 | India   |
+|    3 | Rohit |   35 |   45 |  233 |  141 |   87 |   42 | India   |
++------+-------+------+------+------+------+------+------+---------+
+
+4. Write a query to display names of players who did not play tests?
+mysql> select * from cricket where test=0;
++------+-------+------+------+------+------+------+------+----------+
+| ID   | Name  | Age  | Test | ODI  | T20  | 50s  | 100s | Country  |
++------+-------+------+------+------+------+------+------+----------+
+|    2 | Surya |   31 |    0 |   13 |   33 |   37 |   15 | India    |
+|    5 | Wasim |   33 |    0 |   55 |   58 |    5 |    0 | Pakistan |
++------+-------+------+------+------+------+------+------+----------+
+
+5.Write a query to display names and ages who is 35 years old?
+mysql> select name,age from cricket where age=35;
++----------+------+
+| name     | age  |
++----------+------+
+| Rohit    |   35 |
+| Shakid   |   35 |
+| Williams |   35 |
+| Moeen    |   35 |
+| Warner   |   35 |
++----------+------+
+
+6. Write a query to display 50s and 100s of Rohit?
+mysql> select 50s,100s from cricket where name = 'rohit';
++------+------+
+| 50s  | 100s |
++------+------+
+|   87 |   42 |
++------+------+
+
+7. Write a query to display country of Maxwell?
+mysql> select country from cricket where name='maxwell';
++-----------+
+| country   |
++-----------+
+| Australia |
++-----------+
+
+8. Write a query to display names of players who has zero 100s?
+mysql> select name from cricket where 100s=0;
++--------+
+| name   |
++--------+
+| Wasim  |
+| Curran |
++--------+
+
+9. Write a query to display names who played more test matches?
+mysql> select name from cricket order by test desc limit 1;
++--------+
+| name   |
++--------+
+| Warner |
++--------+
+
+10. Write a query to display names of India and England players?
+mysql> select name from cricket where country in ('india','england');
++--------+
+| name   |
++--------+
+| Rahul  |
+| Surya  |
+| Rohit  |
+| Moeen  |
+| Curran |
++--------+
+
+11. Write a query to display youngest player name?
+mysql> select name from cricket order by age limit 1;
++--------+
+| name   |
++--------+
+| Curran |
++--------+
+
+12.Write a query to display player name who has played more then 100 ODIs?
+mysql> select name from cricket where odi>=100;
++----------+
+| name     |
++----------+
+| Rohit    |
+| Shakid   |
+| Williams |
+| Moeen    |
+| Warner   |
+| Maxwell  |
++----------+
+
+13.Write a query to display player name whose age is 30 years?
+mysql> select name from cricket where age = 30;
++-------+
+| name  |
++-------+
+| Rahul |
++-------+
+
+14. Write a query to display total number of T20 of England players?
+mysql> select count(name),country
+    -> from cricket
+    -> group by country
+    -> having country = 'england';
++-------------+---------+
+| count(name) | country |
++-------------+---------+
+|           2 | England |
++-------------+---------+
+
+15. Write a query to display country name of player who did not play single test?
+mysql> select country from cricket where test=0;
++----------+
+| country  |
++----------+
+| India    |
+| Pakistan |
++----------+
+
+16. Write a query to display players name who has atleast one 100 ?
+mysql> select name from cricket where 100s>1;
++----------+
+| name     |
++----------+
+| Rahul    |
+| Surya    |
+| Rohit    |
+| Shakid   |
+| Williams |
+| Moeen    |
+| Warner   |
+| Maxwell  |
++----------+
+
+17. Write a query to display names and test who has played single digit test match?
+mysql> select name from cricket where test < 10;
++---------+
+| name    |
++---------+
+| Surya   |
+| Wasim   |
+| Maxwell |
++---------+
+
+18. Write a query to display country wise total number players?
+mysql> select count(name),country from cricket group by country;
++-------------+------------+
+| count(name) | country    |
++-------------+------------+
+|           3 | India      |
+|           1 | Bangladesh |
+|           1 | Pakistan   |
+|           1 | Zimbabwe   |
+|           2 | England    |
+|           1 | Austarlia  |
+|           1 | Australia  |
++-------------+------------+
+
+19. Write a query to display top three players who has more 100s?
+mysql> select name from cricket order by test desc limit 1;
++--------+
+| name   |
++--------+
+| Warner |
++--------+
+
+20. Write a query to display players names whose 100s between 10 to 20?
+mysql> select name from cricket where 100s between 10 and 20;
++--------+
+| name   |
++--------+
+| Rahul  |
+| Surya  |
+| Shakid |
++--------+
+
+
+
+
+
+
+
+
+

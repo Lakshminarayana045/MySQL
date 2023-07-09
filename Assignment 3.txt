@@ -1,0 +1,378 @@
+1.create database with name employeesdb
+mysql> create database employeesdb;
+
+2.create employeesdb table with columns,first_name,last_name,age,salary
+mysql> create table employeesdb(first_name varchar(23),last_name varchar(21),age int,salary int);
+
+
+3.add new column empid column in the beginning of table
+mysql> alter table employeesdb add column empid int first;
+
+4.add company column after age column
+mysql> alter table employeesdb add column company varchar(21) after age;
+
+5.add location,skill and experience columns to the employeesdb table
+mysql> alter table employeesdb add(location varchar(13),skill varchar(12),experience int);
+
+6.add father_name column after last_name column;
+mysql> alter table employeesdb add column father_name varchar(20) after last_name;
+
+7.add mother_name at the end of table
+mysql> alter table employeesdb add column mother_name varchar(23);
+
+8.delete both column father_name and mother_name
+mysql> alter table employeesdb drop column father_name,drop column mother_name;
+
+9.add marital_status column at the end of table
+mysql> alter table employeesdb add column marital_status varchar(10);
+
+10.add primary on empid column
+mysql> alter table employeesdb modify empid int primary key;
+
+11.add not_null on first_name column
+mysql> alter table employeesdb modify first_name varchar(23) not null;
+
+12.add default value unmarried to marital_status column
+mysql> alter table employeesdb modify marital_status varchar(10) default 'unmarried';
+
+mysql> desc employeesdb;
++----------------+-------------+------+-----+-----------+-------+
+| Field          | Type        | Null | Key | Default   | Extra |
++----------------+-------------+------+-----+-----------+-------+
+| empid          | int(11)     | NO   | PRI | NULL      |       |
+| first_name     | varchar(23) | NO   |     | NULL      |       |
+| last_name      | varchar(21) | YES  |     | NULL      |       |
+| age            | int(11)     | YES  |     | NULL      |       |
+| company        | varchar(21) | YES  |     | NULL      |       |
+| salary         | int(11)     | YES  |     | NULL      |       |
+| location       | varchar(13) | YES  |     | NULL      |       |
+| skill          | varchar(12) | YES  |     | NULL      |       |
+| experience     | int(11)     | YES  |     | NULL      |       |
+| marital_status | varchar(10) | YES  |     | unmarried |       |
++----------------+-------------+------+-----+-----------+-------+
+
+
+
+
+
+
+1) wqtd all employees data?
+mysql> select * from employeesdb;
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+| empid | first_name | last_name | age  | company   | salary | location | skill  | experience | marital_status |
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+|   101 | virat      | kohli     |   22 | tcs       |  20000 | hyd      | python |          2 | unmarried      |
+|   102 | rohit      | sharma    |   24 | wipro     |  30000 | delhi    | django |          3 | unmarried      |
+|   103 | surya      | yadav     |   20 | infosys   |  19000 | chennai  | python |          1 | unmarried      |
+|   104 | sachin     | tendulkar |   25 | microsoft |  35000 | mumbai   | flask  |          9 | married        |
+|   105 | hardik     | pandya    |   22 | tcs       |  20000 | delhi    | flask  |          1 | unmarried      |
+|   106 | rishab     | pant      |   23 | cts       |  23000 | mumbai   | java   |          2 | unmarried      |
+|   107 | jasprit    | bumrah    |   21 | microsoft |  26000 | hyd      | flask  |          2 | unmarried      |
+|   108 | dinesh     | karthik   |   24 | cts       |  24000 | delhi    | java   |          3 | married        |
+|   109 | sanju      | samson    |   22 | infosys   |  22500 | chennai  | python |          2 | unmarried      |
+|   110 | ms         | dhoni     |   25 | tcs       |  30000 | chennai  | python |          5 | married        |
+|   111 | ravindra   | jadeja    | NULL | infosys   |  29000 | mumbai   | django |          4 | married        |
+|   112 | kuldeep    | yadav     |   30 | microsoft |  28000 | delhi    | python |          4 | married        |
+|   113 | axar       | patel     | NULL | cts       |  27000 | chennai  | java   |          5 | married        |
+|   114 | ambati     | rayudu    |   28 | tcs       |  31000 | delhi    | python |          5 | married        |
+|   115 | gautham    | gambhir   |   31 | microsoft |  32000 | chennai  | python |          6 | married        |
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+
+2) wqtd experience of virat?
+mysql> select experience from employeesdb where first_name ='virat';
++------------+
+| experience |
++------------+
+|          2 |
++------------+
+3) wqtd company and location of rohit?
+ sql> select company,location from employeesdb where first_name ='rohit';
++---------+----------+
+| company | location |
++---------+----------+
+| wipro   | delhi    |
++---------+----------+
+
+4)wqtd employee name who is working in infosys and getting 19000 salary?
+mysql> select last_name from employeesdb where company ='infosys'and salary =19000;
++-----------+
+| last_name |
++-----------+
+| yadav     |
++-----------+
+
+
+5) wqtd employee who has highest experience?
+mysql> select first_name from employeesdb order by experience desc limit 1;
++------------+
+| first_name |
++------------+
+| sachin     |
++------------+
+
+6)wqtd first_name,last_namw who is below 25 years old?
+mysql> select first_name,last_name from employeesdb where age<25;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| virat      | kohli     |
+| rohit      | sharma    |
+| surya      | yadav     |
+| hardik     | pandya    |
+| rishab     | pant      |
+| jasprit    | bumrah    |
+| dinesh     | karthik   |
+| sanju      | samson    |
++------------+-----------+
+
+7)wqtd all details based on salaries in desc order?
+mysql> select * from employeesdb order by salary desc;
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+| empid | first_name | last_name | age  | company   | salary | location | skill  | experience | marital_status |
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+|   104 | sachin     | tendulkar |   25 | microsoft |  35000 | mumbai   | flask  |          9 | married        |
+|   115 | gautham    | gambhir   |   31 | microsoft |  32000 | chennai  | python |          6 | married        |
+|   114 | ambati     | rayudu    |   28 | tcs       |  31000 | delhi    | python |          5 | married        |
+|   102 | rohit      | sharma    |   24 | wipro     |  30000 | delhi    | django |          3 | unmarried      |
+|   110 | ms         | dhoni     |   25 | tcs       |  30000 | chennai  | python |          5 | married        |
+|   111 | ravindra   | jadeja    | NULL | infosys   |  29000 | mumbai   | django |          4 | married        |
+|   112 | kuldeep    | yadav     |   30 | microsoft |  28000 | delhi    | python |          4 | married        |
+|   113 | axar       | patel     | NULL | cts       |  27000 | chennai  | java   |          5 | married        |
+|   107 | jasprit    | bumrah    |   21 | microsoft |  26000 | hyd      | flask  |          2 | unmarried      |
+|   108 | dinesh     | karthik   |   24 | cts       |  24000 | delhi    | java   |          3 | married        |
+|   106 | rishab     | pant      |   23 | cts       |  23000 | mumbai   | java   |          2 | unmarried      |
+|   109 | sanju      | samson    |   22 | infosys   |  22500 | chennai  | python |          2 | unmarried      |
+|   105 | hardik     | pandya    |   22 | tcs       |  20000 | delhi    | flask  |          1 | unmarried      |
+|   101 | virat      | kohli     |   22 | tcs       |  20000 | hyd      | python |          2 | unmarried      |
+|   103 | surya      | yadav     |   20 | infosys   |  19000 | chennai  | python |          1 | unmarried      |
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+
+
+8) wqtd all employees who are not working as python developer in hyderabad?
+mysql>  select first_name from employeesdb where skill!='python'and location='hyd';
++------------+
+| first_name |
++------------+
+| jasprit    |
++------------+
+
+9)wqtd  all employees who are getting more than 25000 in chennai?
+mysql> select first_name from employeesdb where location='chennai'and salary>25000;
++------------+
+| first_name |
++------------+
+| ms         |
+| axar       |
+| gautham    |
++------------+
+
+10)wqtd marital_status of tcs employee working in delhi?
+mysql> select marital_status from employeesdb where location='delhi' and company='tcs';
++----------------+
+| marital_status |
++----------------+
+| unmarried      |
+| married        |
++----------------+
+
+11) wqtd skill of tcs unmarried employee?
+mysql> select skill from employeesdb where marital_status ='unmarried' and company ='tcs';
++--------+
+| skill  |
++--------+
+| python |
+| flask  |
++--------+
+
+12) wqtd age of cts employee working on java skill with 2 years experience?
+mysql> select age from employeesdb where skill ='java' and experience =2 and company ='cts';
++------+
+| age  |
++------+
+|   23 |
++------+
+
+13)wqtd first_name and company of microsoft in delhi location?
+mysql> select first_name from employeesdb where company ='microsoft' and location ='delhi';
++------------+
+| first_name |
++------------+
+| kuldeep    |
++------------+
+
+14)wqtd first_name,skill of married django developer?
+ mysql>  select first_name,skill from employeesdb where  skill='django' and marital_status ='married';
++------------+--------+
+| first_name | skill  |
++------------+--------+
+| ravindra   | django |
++------------+--------+
+
+15) wqtd first_name who is taking 30000 in chennai location?
+mysql> select first_name from employeesdb where  salary =30000 and location='chennai';
++------------+
+| first_name |
++------------+
+| ms         |
++------------+
+
+16) wqtd first_name and last_name of all hyderabad tcs employees?
+mysql> select first_name,last_name from employeesdb where location='hyd' And company='tcs';
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| virat      | kohli     |
++------------+-----------+
+
+17)wqtd experience 21 years old microsoft employee?
+
+mysql> select experience from employeesdb where age=21 and company ='microsoft';
++------------+
+| experience |
++------------+
+|          2 |
++------------+
+
+18)wqtd last_name of java developer in cts from delhi?
+mysql> select last_name from employeesdb where skill='java'and company='cts'and location ='delhi';
++-----------+
+| last_name |
++-----------+
+| karthik   |
++-----------+
+
+19) wqtd first_name of all python developers?
+mysql> select first_name from employeesdb where skill='python';
++------------+
+| first_name |
++------------+
+| virat      |
+| surya      |
+| sanju      |
+| ms         |
+| kuldeep    |
+| ambati     |
+| gautham    |
++------------+
+
+
+20.WAQTD married employee first_name who is taking highest salary.
+mysql> select first_name from employeesdb where maritial_status='married' order by salary desc limit 1;
++------------+
+| first_name |
++------------+
+| sachin     |
++------------+
+
+21.WAQTD unmarried employee first_name who is taking very less salary?
+mysql> select first_name from employeesdb where maritial_status='unmarried'
+    -> order by salary limit 1;
++------------+
+| first_name |
++------------+
+| surya      |
++------------+
+
+22. WAQTD first_name who has more exp as python developer?
+mysql> select first_name from employeesdb where skill='python'
+    -> order by experience desc limit 1;
++------------+
+| first_name |
++------------+
+| ms         |
++------------+
+
+23.WAQTD first_name, skill who is taking highest salary in TCSs?
+mysql> select first_name, skill from employeesdb where company='tcs'
+    -> order by salary desc limit 1;
++------------+--------+
+| first_name | skill  |
++------------+--------+
+| virat      | python |
++------------+--------+
+
+24) wqtd company wise highest salaries?
+mysql> select max(salary),company from employeesdb group by company;
++-------------+-----------+
+| max(salary) | company   |
++-------------+-----------+
+|       27000 | cts       |
+|       29000 | infosys   |
+|       35000 | microsoft |
+|       31000 | tcs       |
+|       30000 | wipro     |
++-------------+-----------+
+
+
+25) wqtd location wise count of employees where the count must be 2 or more?
+mysql> select count(empid) from employeesdb group by location having count(location)>=2;
++--------------+
+| count(empid) |
++--------------+
+|            5 |
+|            5 |
+|            2 |
+|            3 |
++--------------+
+
+26) wqtd total salaries of all married employees?
+mysql> select sum(salary) from employeesdb group by marital_status having marital_status ='married';
++-------------+
+| sum(salary) |
++-------------+
+|      236000 |
++-------------+
+
+27) wqtd all details of employees whose name starts with s?
+mysql> select * from employeesdb where first_name like 's%';
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+| empid | first_name | last_name | age  | company   | salary | location | skill  | experience | marital_status |
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+|   103 | surya      | yadav     |   20 | infosys   |  19000 | chennai  | python |          1 | unmarried      |
+|   104 | sachin     | tendulkar |   25 | microsoft |  35000 | mumbai   | flask  |          9 | married        |
+|   109 | sanju      | samson    |   22 | infosys   |  22500 | chennai  | python |          2 | unmarried      |
++-------+------------+-----------+------+-----------+--------+----------+--------+------------+----------------+
+
+
+28)wqtd first_name,company of employees whose name ends with A?
+mysql> select first_name,company from employeesdb where last_name like '%a';
++------------+---------+
+| first_name | company |
++------------+---------+
+| rohit      | wipro   |
+| hardik     | tcs     |
+| ravindra   | infosys |
++------------+---------+
+
+29) wqtd first_name and last_name of employees whose company name ends with s?
+mysql> select first_name,last_name from employeesdb where company like '%s';
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| virat      | kohli     |
+| surya      | yadav     |
+| hardik     | pandya    |
+| rishab     | pant      |
+| dinesh     | karthik   |
+| sanju      | samson    |
+| ms         | dhoni     |
+| ravindra   | jadeja    |
+| axar       | patel     |
+| ambati     | rayudu    |
++------------+-----------+
+
+30) wqtd marital_status of employees whose skill has only 6 characters?
+mysql> select marital_status from employeesdb where skill like '______';
++----------------+
+| marital_status |
++----------------+
+| unmarried      |
+| unmarried      |
+| unmarried      |
+| unmarried      |
+| married        |
+| married        |
+| married        
+| married        |
+| married        |
++----------------+

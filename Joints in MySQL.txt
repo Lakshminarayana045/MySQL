@@ -1,0 +1,511 @@
+
+mysql> create database stu;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use stu;
+Database changed
+
+mysql> create table stu (sid int,sname char(10),loc varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc stu;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| sid   | int         | YES  |     | NULL    |       |
+| sname | char(10)    | YES  |     | NULL    |       |
+| loc   | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into stu values(1,'nani','hyd'),(2,'rohit','bang');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into stu values(3,'kohil','delhi'),(4,'dhoni','chenni'),(5,'sai','hyd');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from stu;
++------+-------+--------+
+| sid  | sname | loc    |
++------+-------+--------+
+|    1 | nani  | hyd    |
+|    2 | rohit | bang   |
+|    3 | kohil | delhi  |
+|    4 | dhoni | chenni |
+|    5 | sai   | hyd    |
++------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create database cou;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table cou (cid int,cname char(10),fee int,sno int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into cou values(11,'python','3000',1),(12,'django','4000',2),(13,'java','4000',3);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into cou values(14,'ui','500',6),(15,'sql','1000',7);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from cou;
++------+--------+------+------+
+| cid  | cname  | fee  | sno  |
++------+--------+------+------+
+|   11 | python | 3000 |    1 |
+|   12 | django | 4000 |    2 |
+|   13 | java   | 4000 |    3 |
+|   14 | ui     |  500 |    6 |
+|   15 | sql    | 1000 |    7 |
++------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from stu;
++------+-------+--------+
+| sid  | sname | loc    |
++------+-------+--------+
+|    1 | nani  | hyd    |
+|    2 | rohit | bang   |
+|    3 | kohil | delhi  |
+|    4 | dhoni | chenni |
+|    5 | sai   | hyd    |
++------+-------+--------+
+5 rows in set (0.00 sec)
+
+
+1.INNER JOIN
+  ==========
+
+
+mysql> select * from stu inner join cou on stu.sid=cou.sno;
++------+-------+-------+------+--------+------+------+
+| sid  | sname | loc   | cid  | cname  | fee  | sno  |
++------+-------+-------+------+--------+------+------+
+|    1 | nani  | hyd   |   11 | python | 3000 |    1 |
+|    2 | rohit | bang  |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |
++------+-------+-------+------+--------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,sno from stu inner join cou on stu.sid=cou.sno;
++------+------+
+| sid  | sno  |
++------+------+
+|    1 |    1 |
+|    2 |    2 |
+|    3 |    3 |
++------+------+
+3 rows in set (0.00 sec)
+
+mysql> select sname,cname from stu inner join cou on stu.sid=cou.sno;
++-------+--------+
+| sname | cname  |
++-------+--------+
+| nani  | python |
+| rohit | django |
+| kohil | java   |
++-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,sno,sname,cname,loc,fee from stu inner join cou on stu.sid=cou.sno;
++------+------+-------+--------+-------+------+
+| sid  | sno  | sname | cname  | loc   | fee  |
++------+------+-------+--------+-------+------+
+|    1 |    1 | nani  | python | hyd   | 3000 |
+|    2 |    2 | rohit | django | bang  | 4000 |
+|    3 |    3 | kohil | java   | delhi | 4000 |
++------+------+-------+--------+-------+------+
+3 rows in set (0.00 sec)
+
+
+2.LEFT OUTER JOIN
+  ===============
+
+
+
+
+mysql> select * from stu left outer join cou on stu.sid=cou.sno;
++------+-------+--------+------+--------+------+------+
+| sid  | sname | loc    | cid  | cname  | fee  | sno  |
++------+-------+--------+------+--------+------+------+
+|    1 | nani  | hyd    |   11 | python | 3000 |    1 |
+|    2 | rohit | bang   |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi  |   13 | java   | 4000 |    3 |
+|    4 | dhoni | chenni | NULL | NULL   | NULL | NULL |
+|    5 | sai   | hyd    | NULL | NULL   | NULL | NULL |
++------+-------+--------+------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select sid,sno,sname,cname from stu left outer join cou on stu.sid=cou.sno;
++------+------+-------+--------+
+| sid  | sno  | sname | cname  |
++------+------+-------+--------+
+|    1 |    1 | nani  | python |
+|    2 |    2 | rohit | django |
+|    3 |    3 | kohil | java   |
+|    4 | NULL | dhoni | NULL   |
+|    5 | NULL | sai   | NULL   |
++------+------+-------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> select * from stu left outer join cou on stu.sid=cou.sno where cname is null;
++------+-------+--------+------+-------+------+------+
+| sid  | sname | loc    | cid  | cname | fee  | sno  |
++------+-------+--------+------+-------+------+------+
+|    4 | dhoni | chenni | NULL | NULL  | NULL | NULL |
+|    5 | sai   | hyd    | NULL | NULL  | NULL | NULL |
++------+-------+--------+------+-------+------+------+
+2 rows in set (0.00 sec)
+
+mysql> select sname,loc from stu left outer join cou on stu.sid=cou.sno where cname is null;
++-------+--------+
+| sname | loc    |
++-------+--------+
+| dhoni | chenni |
+| sai   | hyd    |
++-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from stu left outer join cou on stu.sid=cou.sno where cname is not null;
++------+-------+-------+------+--------+------+------+
+| sid  | sname | loc   | cid  | cname  | fee  | sno  |
++------+-------+-------+------+--------+------+------+
+|    1 | nani  | hyd   |   11 | python | 3000 |    1 |
+|    2 | rohit | bang  |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |
++------+-------+-------+------+--------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> select sname from stu left outer join cou on stu.sid=cou.sno where cname is not null;
++-------+
+| sname |
++-------+
+| nani  |
+| rohit |
+| kohil |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select sname,loc from stu left outer join cou on stu.sid=cou.sno where cname is not null;
++-------+-------+
+| sname | loc   |
++-------+-------+
+| nani  | hyd   |
+| rohit | bang  |
+| kohil | delhi |
++-------+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+3.RIGHT OUTER JOIN
+  ================
+
+
+
+mysql> select * from stu right outer join cou on stu.sid=cou.sno;
++------+-------+-------+------+--------+------+------+
+| sid  | sname | loc   | cid  | cname  | fee  | sno  |
++------+-------+-------+------+--------+------+------+
+|    1 | nani  | hyd   |   11 | python | 3000 |    1 |
+|    2 | rohit | bang  |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |
+| NULL | NULL  | NULL  |   14 | ui     |  500 |    6 |
+| NULL | NULL  | NULL  |   15 | sql    | 1000 |    7 |
++------+-------+-------+------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select sid,sno,sname,cname from stu right outer join cou on stu.sid=cou.sno;
++------+------+-------+--------+
+| sid  | sno  | sname | cname  |
++------+------+-------+--------+
+|    1 |    1 | nani  | python |
+|    2 |    2 | rohit | django |
+|    3 |    3 | kohil | java   |
+| NULL |    6 | NULL  | ui     |
+| NULL |    7 | NULL  | sql    |
++------+------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from stu right outer join cou on stu.sid=cou.sno where stu.sname is null;
++------+-------+------+------+-------+------+------+
+| sid  | sname | loc  | cid  | cname | fee  | sno  |
++------+-------+------+------+-------+------+------+
+| NULL | NULL  | NULL |   14 | ui    |  500 |    6 |
+| NULL | NULL  | NULL |   15 | sql   | 1000 |    7 |
++------+-------+------+------+-------+------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from stu right outer join cou on stu.sid=cou.sno where stu.sname is not null;
++------+-------+-------+------+--------+------+------+
+| sid  | sname | loc   | cid  | cname  | fee  | sno  |
++------+-------+-------+------+--------+------+------+
+|    1 | nani  | hyd   |   11 | python | 3000 |    1 |
+|    2 | rohit | bang  |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |
++------+-------+-------+------+--------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> select cname from stu right outer join cou on stu.sid=cou.sno where stu.sname is not null;
++--------+
+| cname  |
++--------+
+| python |
+| django |
+| java   |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select cname from stu right outer join cou on stu.sid=cou.sno where stu.sname is null;
++-------+
+| cname |
++-------+
+| ui    |
+| sql   |
++-------+
+2 rows in set (0.00 sec)
+
+
+
+4.FULL OUTER JOIN
+  ===============
+
+
+
+mysql> select * from stu left outer join cou on stu.sid=cou.sno
+    -> union
+    -> select * from stu right outer join cou on stu.sid=cou.sno;
++------+-------+--------+------+--------+------+------+
+| sid  | sname | loc    | cid  | cname  | fee  | sno  |
++------+-------+--------+------+--------+------+------+
+|    1 | nani  | hyd    |   11 | python | 3000 |    1 |
+|    2 | rohit | bang   |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi  |   13 | java   | 4000 |    3 |
+|    4 | dhoni | chenni | NULL | NULL   | NULL | NULL |
+|    5 | sai   | hyd    | NULL | NULL   | NULL | NULL |
+| NULL | NULL  | NULL   |   14 | ui     |  500 |    6 |
+| NULL | NULL  | NULL   |   15 | sql    | 1000 |    7 |
++------+-------+--------+------+--------+------+------+
+7 rows in set (0.00 sec)
+
+
+
+5.CROSS JOIN
+  ==========
+
+
+mysql> select * from stu,cou;
++------+-------+--------+------+--------+------+------+
+| sid  | sname | loc    | cid  | cname  | fee  | sno  |
++------+-------+--------+------+--------+------+------+
+|    5 | sai   | hyd    |   11 | python | 3000 |    1 |
+|    4 | dhoni | chenni |   11 | python | 3000 |    1 |
+|    3 | kohil | delhi  |   11 | python | 3000 |    1 |
+|    2 | rohit | bang   |   11 | python | 3000 |    1 |
+|    1 | nani  | hyd    |   11 | python | 3000 |    1 |
+|    5 | sai   | hyd    |   12 | django | 4000 |    2 |
+|    4 | dhoni | chenni |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi  |   12 | django | 4000 |    2 |
+|    2 | rohit | bang   |   12 | django | 4000 |    2 |
+|    1 | nani  | hyd    |   12 | django | 4000 |    2 |
+|    5 | sai   | hyd    |   13 | java   | 4000 |    3 |
+|    4 | dhoni | chenni |   13 | java   | 4000 |    3 |
+|    3 | kohil | delhi  |   13 | java   | 4000 |    3 |
+|    2 | rohit | bang   |   13 | java   | 4000 |    3 |
+|    1 | nani  | hyd    |   13 | java   | 4000 |    3 |
+|    5 | sai   | hyd    |   14 | ui     |  500 |    6 |
+|    4 | dhoni | chenni |   14 | ui     |  500 |    6 |
+|    3 | kohil | delhi  |   14 | ui     |  500 |    6 |
+|    2 | rohit | bang   |   14 | ui     |  500 |    6 |
+|    1 | nani  | hyd    |   14 | ui     |  500 |    6 |
+|    5 | sai   | hyd    |   15 | sql    | 1000 |    7 |
+|    4 | dhoni | chenni |   15 | sql    | 1000 |    7 |
+|    3 | kohil | delhi  |   15 | sql    | 1000 |    7 |
+|    2 | rohit | bang   |   15 | sql    | 1000 |    7 |
+|    1 | nani  | hyd    |   15 | sql    | 1000 |    7 |
++------+-------+--------+------+--------+------+------+
+25 rows in set (0.00 sec)
+
+mysql> select sid,sno from stu,cou;
++------+------+
+| sid  | sno  |
++------+------+
+|    5 |    1 |
+|    4 |    1 |
+|    3 |    1 |
+|    2 |    1 |
+|    1 |    1 |
+|    5 |    2 |
+|    4 |    2 |
+|    3 |    2 |
+|    2 |    2 |
+|    1 |    2 |
+|    5 |    3 |
+|    4 |    3 |
+|    3 |    3 |
+|    2 |    3 |
+|    1 |    3 |
+|    5 |    6 |
+|    4 |    6 |
+|    3 |    6 |
+|    2 |    6 |
+|    1 |    6 |
+|    5 |    7 |
+|    4 |    7 |
+|    3 |    7 |
+|    2 |    7 |
+|    1 |    7 |
++------+------+
+25 rows in set (0.00 sec)
+
+mysql> select sname,cname from stu,cou;
++-------+--------+
+| sname | cname  |
++-------+--------+
+| sai   | python |
+| dhoni | python |
+| kohil | python |
+| rohit | python |
+| nani  | python |
+| sai   | django |
+| dhoni | django |
+| kohil | django |
+| rohit | django |
+| nani  | django |
+| sai   | java   |
+| dhoni | java   |
+| kohil | java   |
+| rohit | java   |
+| nani  | java   |
+| sai   | ui     |
+| dhoni | ui     |
+| kohil | ui     |
+| rohit | ui     |
+| nani  | ui     |
+| sai   | sql    |
+| dhoni | sql    |
+| kohil | sql    |
+| rohit | sql    |
+| nani  | sql    |
++-------+--------+
+25 rows in set (0.00 sec)
+
+
+
+NOTE : WITHOUT USING iNNER JOIN (inner join)
+====   =====================================
+
+
+mysql> select * from stu,cou where stu.sid=cou.sno;
++------+-------+-------+------+--------+------+------+
+| sid  | sname | loc   | cid  | cname  | fee  | sno  |
++------+-------+-------+------+--------+------+------+
+|    1 | nani  | hyd   |   11 | python | 3000 |    1 |
+|    2 | rohit | bang  |   12 | django | 4000 |    2 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |
++------+-------+-------+------+--------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,sno,sname,cname from stu,cou where stu.sid=cou.sno;
++------+------+-------+--------+
+| sid  | sno  | sname | cname  |
++------+------+-------+--------+
+|    1 |    1 | nani  | python |
+|    2 |    2 | rohit | django |
+|    3 |    3 | kohil | java   |
++------+------+-------+--------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+6.THREE TABLES JOINING
+  ====================
+
+
+mysql> select * from pro;
++------+--------+-------+------+
+| pid  | pname  | pcost | cno  |
++------+--------+-------+------+
+|  101 | lap    | 50000 |   11 |
+|  102 | mobile | 30000 |   12 |
+|  103 | pen    |   100 |   13 |
+|  104 | tab    | 20000 |   13 |
+|  105 | PC     | 25000 |   15 |
+|  106 | mouse  |  1500 |   13 |
++------+--------+-------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from cou;
++------+--------+------+------+
+| cid  | cname  | fee  | sno  |
++------+--------+------+------+
+|   11 | python | 3000 |    1 |
+|   12 | django | 4000 |    2 |
+|   13 | java   | 4000 |    3 |
+|   14 | ui     |  500 |    6 |
+|   15 | sql    | 1000 |    7 |
++------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from stu;
++------+-------+--------+
+| sid  | sname | loc    |
++------+-------+--------+
+|    1 | nani  | hyd    |
+|    2 | rohit | bang   |
+|    3 | kohil | delhi  |
+|    4 | dhoni | chenni |
+|    5 | sai   | hyd    |
++------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from stu inner join cou on stu.sid=cou.sno inner join pro on cou.cid=pro.cno;
++------+-------+-------+------+--------+------+------+------+--------+-------+------+
+| sid  | sname | loc   | cid  | cname  | fee  | sno  | pid  | pname  | pcost | cno  |
++------+-------+-------+------+--------+------+------+------+--------+-------+------+
+|    1 | nani  | hyd   |   11 | python | 3000 |    1 |  101 | lap    | 50000 |   11 |
+|    2 | rohit | bang  |   12 | django | 4000 |    2 |  102 | mobile | 30000 |   12 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |  103 | pen    |   100 |   13 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |  104 | tab    | 20000 |   13 |
+|    3 | kohil | delhi |   13 | java   | 4000 |    3 |  106 | mouse  |  1500 |   13 |
++------+-------+-------+------+--------+------+------+------+--------+-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select s.sname,p.pname,c.cname from stu s inner join cou c on s.sid=c.sno inner join pro p on c.cid=p.cno;
++-------+--------+--------+
+| sname | pname  | cname  |
++-------+--------+--------+
+| nani  | lap    | python |
+| rohit | mobile | django |
+| kohil | pen    | java   |
+| kohil | tab    | java   |
+| kohil | mouse  | java   |
++-------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select s.sname as studentname,p.pname as productName,c.cname as courseName from stu s inner join cou c on s.sid=c.sno inner join pro p on c.cid=p.cno;
++-------------+-------------+------------+
+| studentname | productName | courseName |
++-------------+-------------+------------+
+| nani        | lap         | python     |
+| rohit       | mobile      | django     |
+| kohil       | pen         | java       |
+| kohil       | tab         | java       |
+| kohil       | mouse       | java       |
++-------------+-------------+------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
